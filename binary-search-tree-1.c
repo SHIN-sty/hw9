@@ -13,6 +13,7 @@
 
 typedef struct node {
 	int key;
+	int data;
 	struct node *left;
 	struct node *right;
 } Node;
@@ -162,16 +163,32 @@ void postorderTraversal(Node* ptr)
 
 int insert(Node* head, int key)
 {
-  if(head->key)
-  else if(head->key){
-	  if(head->left == NULL) head->left;
-	  else insert(head -> left, key);
-
+  Node* temp = head;
+  if(temp == NULL){
+	  temp = Node_create(key);
   }
   else{
-	  if(head->right == NULL) head -> right;
-	  else insert(head -> right, key);
-  }
+	  while(1){
+	  if(temp-> key <key){
+		  if(temp -> right == NULL){
+			  temp -> right = Node_create(key);
+			  break;
+		  }
+		  else{
+			  temp = temp -> right;
+		  }
+	  }
+	  else{
+		  if(temp -> left == NULL){
+			  temp -> left = Node_create(key);
+			  break;
+		  }
+		  else{
+			  temp = temp -> left;
+		  }
+	  }
+   }
+ }
 }
 
 int deleteLeafNode(Node* head, int key)
@@ -190,12 +207,12 @@ int deleteLeafNode(Node* head, int key)
 Node* searchRecursive(Node* ptr, int key)
 {
  if(ptr == NULL){
-        printf("Å°°ªÀÌ (%d)ÀÎ ³ëµå´Â ¾ø½À´Ï´Ù. [°Ë»ö½ÇÆĞ]\n", key);
+        printf("í‚¤ê°’ì´ (%d)ì¸ ë…¸ë“œëŠ” ì—†ìŠµë‹ˆë‹¤. [ê²€ìƒ‰ì‹¤íŒ¨]\n", key);
         return NULL;
-    } else if (key == ptr->key){
-        printf("Å°°ªÀÌ (%d)ÀÎ ³ëµå¸¦ ¹İÈ¯ÇÕ´Ï´Ù. [°Ë»ö¼º°ø]\n", key);
+    } else if (key == ptr->data){
+        printf("í‚¤ê°’ì´ (%d)ì¸ ë…¸ë“œë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤. [ê²€ìƒ‰ì„±ê³µ]\n", key);
         return ptr;
-    } else if (key < ptr->key){
+    } else if (key < ptr->data){
         searchRecursive(ptr->left, key);
     } else {
         searchRecursive(ptr->right, key);
@@ -205,8 +222,8 @@ Node* searchRecursive(Node* ptr, int key)
 Node* searchIterative(Node* head, int key)
 {
  while(head != NULL){
-	 if(key == head->key) return head;
-	 else if(key < head->key) head = node -> left;
+	 if(key == head->data) return head;
+	 else if(key < head->data) head = node->left;
 	 else head = node->right;
  }
  return NULL;
