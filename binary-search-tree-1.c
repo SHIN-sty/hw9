@@ -59,7 +59,9 @@ int main()
 		printf(" Preorder Traversal   = p      Search Node Iteratively      = f\n");
 		printf(" Postorder Traversal  = t      Quit                         = q\n");
 		printf("----------------------------------------------------------------\n");
-
+                
+		printf("성명: 신태양\n");
+		printf("학번: 2017038096\n");
 		printf("Command = ");
 		scanf(" %c", &command);
 
