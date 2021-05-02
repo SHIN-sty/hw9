@@ -163,32 +163,32 @@ void postorderTraversal(Node* ptr)
 
 int insert(Node* head, int key)
 {
-  Node* n     = (Node*)malloc(sizeof(Node));
-    Node* temp  = head; 
+    Node* n = (Node*)malloc(sizeof(Node));
+    Node* temp = head; 
 
-    n->key  = key;
-    n->p    = NULL;
+    n->key = key;
+    n->p = NULL;
     n->left = NULL;
     n->right= NULL;
 
     if( temp == NULL)
     {
-        head  = n;
+        head = n;
 
         return;
     }
 
     while( temp != NULL)
     {
-        n->p    = temp;
+        n->p = temp;
        
         if( temp->key > key)
         {
-            temp    = temp->left;
+            temp = temp->left;
         }
         else
         {
-            temp    = temp->right;
+            temp = temp->right;
         }
     }
 
