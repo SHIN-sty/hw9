@@ -163,32 +163,44 @@ void postorderTraversal(Node* ptr)
 
 int insert(Node* head, int key)
 {
-  Node* temp = head;
-  if(temp == NULL){
-	  temp = Node_create(key);
-  }
-  else{
-	  while(1){
-	  if(temp-> key <key){
-		  if(temp -> right == NULL){
-			  temp -> right = Node_create(key);
-			  break;
-		  }
-		  else{
-			  temp = temp -> right;
-		  }
-	  }
-	  else{
-		  if(temp -> left == NULL){
-			  temp -> left = Node_create(key);
-			  break;
-		  }
-		  else{
-			  temp = temp -> left;
-		  }
-	  }
-   }
- }
+  Node* n     = (Node*)malloc(sizeof(Node));
+    Node* temp  = head; 
+
+    n->key  = key;
+    n->p    = NULL;
+    n->left = NULL;
+    n->right= NULL;
+
+    if( temp == NULL)
+    {
+        head  = n;
+
+        return;
+    }
+
+    while( temp != NULL)
+    {
+        n->p    = temp;
+       
+        if( temp->key > key)
+        {
+            temp    = temp->left;
+        }
+        else
+        {
+            temp    = temp->right;
+        }
+    }
+
+   
+    if( (n->p)->key > key)
+    {
+        (n->p)->left = n;
+    }
+    else
+    {
+        (n->p)->right = n;
+    }
 }
 
 int deleteLeafNode(Node* head, int key)
