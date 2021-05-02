@@ -164,44 +164,16 @@ void postorderTraversal(Node* ptr)
 
 int insert(Node* head, int key)
 {
-    Node* n = (Node*)malloc(sizeof(Node));
-    Node* temp = head; 
-
-    n->key = key;
-    n->p = NULL;
-    n->left = NULL;
-    n->right= NULL;
-
-    if( temp == NULL)
-    {
-        head = n;
-
-        return;
-    }
-
-    while( temp != NULL)
-    {
-        n->p = temp;
-       
-        if( temp->key > key)
-        {
-            temp = temp->left;
-        }
-        else
-        {
-            temp = temp->right;
-        }
-    }
-
-   
-    if( (n->p)->key > key)
-    {
-        (n->p)->left = n;
-    }
-    else
-    {
-        (n->p)->right = n;
-    }
+ if (head == NULL) {
+return key;
+}
+if (key < head->data) {
+head->left = insert(head->left, key);
+}
+else if (key > head->data) {
+head->right = insert(head->right, key);
+}
+return head; 
 }
 
 int deleteLeafNode(Node* head, int key)
@@ -234,12 +206,17 @@ Node* searchRecursive(Node* ptr, int key)
 
 Node* searchIterative(Node* head, int key)
 {
- while(head != NULL){
-	 if(key == head->data) return head;
-	 else if(key < head->data) head = node->left;
-	 else head = node->right;
- }
- return NULL;
+while (head != NULL) {
+if (key == head->data) {
+return head;
+}
+else if (key < head->data) {
+head = head->left;
+}
+else
+head = head->right;
+}
+return NULL;
 }
 
 
