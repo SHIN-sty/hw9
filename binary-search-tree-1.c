@@ -228,9 +228,9 @@ Node* searchRecursive(Node* ptr, int key)
         printf("키값이 (%d)인 노드를 반환합니다. [검색성공]\n", key);
         return ptr;
     } else if (key < ptr->data){
-        searchRecursive(ptr->left, key);
+        return searchRecursive(ptr->left, key);
     } else {
-        searchRecursive(ptr->right, key);
+        return searchRecursive(ptr->right, key);
     }
 }
 
