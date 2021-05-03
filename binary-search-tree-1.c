@@ -18,6 +18,7 @@ typedef struct node {
 	struct node *left;
 	struct node *right;
 	struct node *p;
+	struct node* parent;
 } Node;
 
 Node* makeRootNode(int data, Node* leftNode, Node* rightNode){
