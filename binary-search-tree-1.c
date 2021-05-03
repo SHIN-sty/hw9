@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <memory.h>
 
 typedef struct node {
 	int key;
@@ -19,9 +20,9 @@ typedef struct node {
 	struct node *p;
 } Node;
 
-Node* makeRootNode(int key, Node* leftNode, Node* rightNode){
+Node* makeRootNode(int data, Node* leftNode, Node* rightNode){
 	Node* root = (Node*)malloc(sizeof(Node));
-	root -> key = key;
+	root -> data = data;
 	root -> left = leftNode;
 	root -> right = rightNode;
 	return root;
@@ -45,6 +46,7 @@ int main()
 {
 	char command;
 	int key;
+	int data;
 	Node* head = NULL;
 	Node* ptr = NULL;	/* temp */
 
@@ -59,7 +61,7 @@ int main()
 		printf(" Preorder Traversal   = p      Search Node Iteratively      = f\n");
 		printf(" Postorder Traversal  = t      Quit                         = q\n");
 		printf("----------------------------------------------------------------\n");
-                
+        
 		printf("성명: 신태양\n");
 		printf("학번: 2017038096\n");
 		printf("Command = ");
@@ -128,8 +130,8 @@ int initializeBST(Node** h) {
 
 	/* create a head node */
 	*h = (Node*)malloc(sizeof(Node));
-	(*h)->left = NULL;	/* root */
-	(*h)->right = *h;
+	(*h)->right = NULL;	/* root */
+	(*h)->left = NULL;
 	(*h)->key = -9999;
 	return 1;
 }
@@ -140,7 +142,7 @@ void inorderTraversal(Node* ptr)
 {
  if(ptr){
 	inorderTraversal(ptr -> left);
-	printf("%c", ptr -> key);
+	printf("[%d]", ptr -> data);
 	inorderTraversal(ptr -> right);
  }
 }
@@ -148,7 +150,7 @@ void inorderTraversal(Node* ptr)
 void preorderTraversal(Node* ptr)
 {
  if(ptr){
-	 printf("%c", ptr->key);
+	 printf("[%d]", ptr->data);
 	 preorderTraversal(ptr -> left);
 	 preorderTraversal(ptr -> right);
  }
@@ -159,14 +161,14 @@ void postorderTraversal(Node* ptr)
  if(ptr){
 	postorderTraversal(ptr -> left);
 	postorderTraversal(ptr -> right);
-	printf("%c", ptr -> key);
+	printf("[%d]", ptr -> data);
  }
 }
 
 
 int insert(Node* head, int key)
 {
-Node* n = (Node*)malloc(sizeof(Node));
+ Node* n = (Node*)malloc(sizeof(Node));
     Node* temp = head; 
 
     n->key = key;
@@ -204,6 +206,7 @@ Node* n = (Node*)malloc(sizeof(Node));
     {
         (n->p)->right = n;
     }
+	return key;
 }
 
 int deleteLeafNode(Node* head, int key)
