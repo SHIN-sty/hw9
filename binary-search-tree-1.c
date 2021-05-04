@@ -14,16 +14,14 @@
 
 typedef struct node {
 	int key;
-	int data;
 	struct node *left;
 	struct node *right;
 	struct node *p;
-	struct node* parent;
 } Node;
 
 Node* makeRootNode(int data, Node* leftNode, Node* rightNode){
 	Node* root = (Node*)malloc(sizeof(Node));
-	root -> data = data;
+	root -> key = data;
 	root -> left = leftNode;
 	root -> right = rightNode;
 	return root;
@@ -47,7 +45,6 @@ int main()
 {
 	char command;
 	int key;
-	int data;
 	Node* head = NULL;
 	Node* ptr = NULL;	/* temp */
 
@@ -97,7 +94,7 @@ int main()
 		case 's': case 'S':
 			printf("Your Key = ");
 			scanf("%d", &key);
-			ptr = searchRecursive(head->left, key);
+			ptr = searchRecursive(head->right, key);
 			if(ptr != NULL)
 				printf("\n node [%d] found at %p\n", ptr->key, ptr);
 			else
@@ -105,13 +102,13 @@ int main()
 			break;
 
 		case 'i': case 'I':
-			inorderTraversal(head->left);
+			inorderTraversal(head->right);
 			break;
 		case 'p': case 'P':
-			preorderTraversal(head->left);
+			preorderTraversal(head->right);
 			break;
 		case 't': case 'T':
-			postorderTraversal(head->left);
+			postorderTraversal(head->right);
 			break;
 		default:
 			printf("\n       >>>>>   Concentration!!   <<<<<     \n");
@@ -120,7 +117,7 @@ int main()
 
 	}while(command != 'q' && command != 'Q');
 
-	return 1;
+	return 0;
 }
 
 int initializeBST(Node** h) {
@@ -143,7 +140,7 @@ void inorderTraversal(Node* ptr)
 {
  if(ptr){
 	inorderTraversal(ptr -> left);
-	printf("[%d]", ptr -> data);
+	printf("[%d]", ptr -> key);
 	inorderTraversal(ptr -> right);
  }
 }
@@ -151,7 +148,7 @@ void inorderTraversal(Node* ptr)
 void preorderTraversal(Node* ptr)
 {
  if(ptr){
-	 printf("[%d]", ptr->data);
+	 printf("[%d]", ptr->key);
 	 preorderTraversal(ptr -> left);
 	 preorderTraversal(ptr -> right);
  }
@@ -162,7 +159,7 @@ void postorderTraversal(Node* ptr)
  if(ptr){
 	postorderTraversal(ptr -> left);
 	postorderTraversal(ptr -> right);
-	printf("[%d]", ptr -> data);
+	printf("[%d]", ptr -> key);
  }
 }
 
@@ -203,24 +200,49 @@ int insert(Node* head, int key)
     {
         (n->p)->left = n;
     }
-    else
-    {
-        (n->p)->right = n;
+    else if(n->p->key==key){
+
+    free(n);
+
+    printf("키값이 (%d)인 노드가 이미 존재합니다.", key);
+
+    return -1;
+
     }
-	return key;
+
+    else{
+
+    (n->p)->right = n;
+
+    }
+
+    return key;
 }
 
 int deleteLeafNode(Node* head, int key)
 {
-  Node* parent, *p;
-  
-  if((p -> left == NULL) && (p -> right == NULL)){
-	  if(parent != NULL){
-		  if(parent -> left == p) parent -> left = NULL;
-		  else parent -> right = NULL;
-	  }
-	  else head = NULL;
-  }
+     Node * node= searchRecursive(head, key);
+
+     if (node==NULL){
+         return 0;
+         }
+
+     if (node->left==NULL && node->right==NULL){
+     if(node->key<node->p->key){
+     node->p->left=NULL;
+     }
+     else{
+     node->p->right=NULL;
+     }
+     free(node);
+     printf("키값이 (%d)인 노드를 삭제합니다. [삭제성공]\n", key);
+     return 1;
+     }
+     else{
+    printf("키값이 (%d)인 노드는 leaf 노드가 아닙니다. [삭제실패]\n", key);
+    return 0;
+    }
+
 }
 
 Node* searchRecursive(Node* ptr, int key)
@@ -228,10 +250,10 @@ Node* searchRecursive(Node* ptr, int key)
  if(ptr == NULL){
         printf("키값이 (%d)인 노드는 없습니다. [검색실패]\n", key);
         return NULL;
-    } else if (key == ptr->data){
+    } else if (key == ptr->key){
         printf("키값이 (%d)인 노드를 반환합니다. [검색성공]\n", key);
         return ptr;
-    } else if (key < ptr->data){
+    } else if (key < ptr->key){
         return searchRecursive(ptr->left, key);
     } else {
         return searchRecursive(ptr->right, key);
@@ -241,10 +263,10 @@ Node* searchRecursive(Node* ptr, int key)
 Node* searchIterative(Node* head, int key)
 {
 while (head != NULL) {
-if (key == head->data) {
+if (key == head->key) {
 return head;
 }
-else if (key < head->data) {
+else if (key < head->key) {
 head = head->left;
 }
 else
